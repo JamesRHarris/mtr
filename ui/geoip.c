@@ -39,14 +39,14 @@ geoip_lookup(struct mtr_ctl *ctl,char* ip,char** country, char** city) {
                ed.type == MMDB_DATA_TYPE_UTF8_STRING ) {
 
                strncpy(cc,ed.utf8_string,min(MAX_GEOIP_VAL -1,ed.data_size));
-               cc[min(MAX_GEOIP_VAL,ed.data_size+1)] = '\0';
+               cc[min(MAX_GEOIP_VAL,ed.data_size)] = '\0';
                *country = cc;
             }
             mmdb_error = MMDB_get_value(&r.entry, &ed,"city","names","en",NULL);
             if(mmdb_error == MMDB_SUCCESS  && ed.has_data &&
                ed.type == MMDB_DATA_TYPE_UTF8_STRING ) {
                strncpy(cty,ed.utf8_string,min(MAX_GEOIP_VAL -1,ed.data_size));
-               cty[min(MAX_GEOIP_VAL,ed.data_size+1)] = '\0';
+               cty[min(MAX_GEOIP_VAL,ed.data_size)] = '\0';
                *city = cty;
             }
    } else {
