@@ -776,6 +776,10 @@ int main(
     struct mtr_ctl ctl;
     memset(&ctl, 0, sizeof(ctl));
     /* initialize non-null values */
+#ifdef GEOIP
+    ctl.GeoIP = 1;
+    ctl.GeoIPFile = "/usr/share/GeoIP/GeoLite2-City.mmdb";
+#endif
     ctl.Interactive = 1;
     ctl.MaxPing = 10;
     ctl.WaitTime = 1.0;
@@ -819,6 +823,11 @@ int main(
 
     parse_arg(&ctl, &names_head, argc, argv);
 
+#ifdef GEOIP
+    if (geoip_init(&ctl) <0) {
+        exit(EXIT_FAILURE);
+    }
+#endif
     while (optind < argc) {
         char *name = argv[optind++];
         append_to_names(&names_head, name);

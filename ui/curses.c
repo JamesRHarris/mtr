@@ -445,6 +445,20 @@ static void mtr_curses_hosts(
             attroff(A_BOLD);
 
             getyx(stdscr, y, __unused_int);
+
+#ifdef GEOIP
+            if (ctl->GeoIP) {
+                int colgeo = 26;
+                char* country;
+                char* city;
+                move(y,colgeo-1);
+                printw("%26s", " ");
+                move(y, colgeo);
+                geoip_lookup(ctl,strlongip(ctl,addr), &country, &city);
+                printw("%s %s",city,country);
+            }
+#endif
+
             move(y, startstat);
 
             /* net_xxx returns times in usecs. Just display millisecs */
@@ -653,7 +667,18 @@ static void mtr_curses_graph(
                 printw(fmt_ipinfo(ctl, addr));
 #endif
             name = dns_lookup(ctl, addr);
+#ifdef GEOIP
+            if (ctl->GeoIP) {
+                char *country, *city;
+                geoip_lookup(ctl,strlongip(ctl,addr), &country, &city);
+                printw("%-15.15s %s %s", name? name: strlongip(ctl,addr),
+                       country, city);
+            } else {
+                printw("%s", name ? name : strlongip(ctl, addr));
+            }
+#else
             printw("%s", name ? name : strlongip(ctl, addr));
+#endif
         } else {
             attron(A_BOLD);
             printw("(%s)", host_error_to_string(err));
@@ -740,6 +765,11 @@ void mtr_curses_redraw(
         }
         attron(A_BOLD);
         mvprintw(rowstat - 1, 0, " Host");
+#ifdef GEOIP
+        if (ctl->GeoIP) {
+            mvprintw(rowstat - 1 , 25, " City, Country");
+        }
+#endif
         mvprintw(rowstat - 1, maxx - hd_len - 1, "%s", buf);
         mvprintw(rowstat - 2, maxx - hd_len - 1,
                  "   Packets               Pings");

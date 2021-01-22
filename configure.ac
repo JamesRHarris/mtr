@@ -89,6 +89,17 @@ AC_ARG_WITH([libasan],
  [with_libasan=yes], [])
 AM_CONDITIONAL([WITH_LIBASAN], [test "x$with_libasan" = "xyes"])
 
+# geoip
+AC_ARG_WITH([geoip],
+ [AS_HELP_STRING([--with-geoip], [Build with geoip (libmaxminddb v2)])],
+ [],[with_geoip=yes])
+AS_IF([test "x$with_geoip" = "xyes"],
+ [AC_CHECK_LIB([maxminddb],[MMDB_open],
+   [AC_DEFINE([GEOIP], [1], [Define to enable GEOIP]) GEOIP_LIBS="-lmaxminddb"],
+   [AC_MSG_ERROR([libmaxminddb not found])])])
+AM_CONDITIONAL([WITH_GEOIP], [test "x$with_geoip" = xyes])
+AC_SUBST([GEOIP_LIBS])
+
 # Find GTK
 AC_ARG_WITH([gtk],
   [AS_HELP_STRING([--without-gtk], [Build without the GTK+ interface])],

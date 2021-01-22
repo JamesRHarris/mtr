@@ -30,6 +30,11 @@
 #include <netinet/in.h>
 #endif
 
+#ifdef GEOIP
+#include <maxminddb.h>
+#include "ui/geoip.h"
+#endif
+
 /* Typedefs */
 #ifdef ENABLE_IPV6
 typedef struct in6_addr ip_t;
@@ -109,10 +114,17 @@ struct mtr_ctl {
     char available_options[MAXFLD];
     int display_offset;         /* only used in text mode */
     void *gtk_data;             /* pointer to hold arbitrary gtk data */
+#ifdef GEOIP
+    char *GeoIPFile;
+    MMDB_s GeoMMDB;
+#endif
     unsigned int                /* bit field to hold named booleans */
      ForceMaxPing:1,
         use_dns:1,
         show_ips:1,
+#ifdef GEOIP
+        GeoIP:1,
+#endif
         enablempls:1, dns:1, reportwide:1, Interactive:1, DisplayMode:5;
 };
 
