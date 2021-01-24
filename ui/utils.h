@@ -39,7 +39,9 @@ static inline void xstrncpy(
     const char *src,
     size_t n)
 {
-    strncpy(dest, src, n - 1);
+    /*avoid the gcc warning of truncating
+     * by doing the full copy*/
+    strncpy(dest, src, n);
     dest[n - 1] = 0;
 }
 

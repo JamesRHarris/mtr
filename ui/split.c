@@ -55,7 +55,7 @@
 
 /* There is 256 hops max in the IP header (coded with a byte) */
 #define MAX_LINE_COUNT 256
-#define MAX_LINE_SIZE  256
+#define MAX_LINE_SIZE  512
 
 static char Lines[MAX_LINE_COUNT][MAX_LINE_SIZE];
 static int LineCount;
