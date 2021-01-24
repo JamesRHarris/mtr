@@ -91,7 +91,7 @@ AM_CONDITIONAL([WITH_LIBASAN], [test "x$with_libasan" = "xyes"])
 
 # geoip
 AC_ARG_WITH([geoip],
- [AS_HELP_STRING([--with-geoip], [Build with geoip (libmaxminddb v2)])],
+ [AS_HELP_STRING([--without-geoip], [Build without geoip (libmaxminddb v2)])],
  [],[with_geoip=yes])
 AS_IF([test "x$with_geoip" = "xyes"],
  [AC_CHECK_LIB([maxminddb],[MMDB_open],
