@@ -22,6 +22,9 @@
    (notably the one on Irix 5.2) do not like that. */
 enum { ActionNone, ActionQuit, ActionReset, ActionDisplay,
     ActionClear, ActionPause, ActionResume, ActionMPLS, ActionDNS,
+#ifdef GEOIP
+    ActionLocation,
+#endif
 #ifdef HAVE_IPINFO
     ActionII, ActionAS,
 #endif

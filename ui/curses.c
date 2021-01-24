@@ -176,6 +176,10 @@ int mtr_curses_keyaction(
         return ActionMPLS;
     case 'n':
         return ActionDNS;
+#ifdef GEOIP
+    case 'l':
+        return ActionLocation;
+#endif
 #ifdef HAVE_IPINFO
     case 'y':
         return ActionII;
@@ -347,6 +351,9 @@ int mtr_curses_keyaction(
         printw("  d       switching display mode\n");
         printw("  e       toggle MPLS information on/off\n");
         printw("  n       toggle DNS on/off\n");
+#ifdef GEOIP
+        printw("  l       toggle location\n");
+#endif
         printw("  r       reset all counters\n");
         printw
             ("  o str   set the columns to display, default str='LRS N BAWV'\n");

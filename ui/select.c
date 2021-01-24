@@ -243,6 +243,15 @@ void select_loop(
                     display_clear(ctl);
                 }
                 break;
+#ifdef GEOIP
+            case ActionLocation:
+               if(ctl->GeoIP) {
+                  ctl->GeoIP = 0;
+               } else {
+                  ctl->GeoIP = 1;
+               }
+               break;
+#endif
 #ifdef HAVE_IPINFO
             case ActionII:
                 ctl->ipinfo_no++;
