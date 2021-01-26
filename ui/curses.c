@@ -462,7 +462,7 @@ static void mtr_curses_hosts(
                 printw("%26s", " ");
                 move(y, colgeo);
                 geoip_lookup(ctl,strlongip(ctl,addr), &country, &city);
-                printw("%s %s",city,country);
+                printw("%s, %s",city,country);
             }
 #endif
 
